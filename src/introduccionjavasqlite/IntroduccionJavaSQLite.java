@@ -2,6 +2,7 @@ package introduccionjavasqlite;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +20,7 @@ public class IntroduccionJavaSQLite {
             connection =  DriverManager.getConnection(URL_BD_SQLite);
             System.out.println("Base de Datos conectada...");
             selectData_PEOPLE(connection);
+            insertData_PEOPLE(connection);
         } catch (SQLException exception) {
             System.out.print("ERROR Kata5 Ejemplo SQLite" + exception.getMessage());
         }
@@ -31,7 +33,7 @@ public class IntroduccionJavaSQLite {
         }
         return connection;
     }
-    ///Con una Base de datos ya existe.
+
     private static void selectData_PEOPLE(Connection connection) {
         String SQL = "SELECT * FROM PEOPLE";
         try {
@@ -44,6 +46,20 @@ public class IntroduccionJavaSQLite {
                         resultset.getString("Apellidos") + " \t "  +
                         resultset.getString("Departamento"));
             }
+        }catch (SQLException exception){
+            System.out.print("ERROR Kata5 Ejemplo SQLite" + exception.getMessage());
+        }
+    }
+    
+    private static void insertData_PEOPLE(Connection connection) {
+        String SQL = "INSERT INTO PEOPLE(ID, NAME, APELLIDOS, DEPARTAMENTO) VALUES (?, ?, ?, ?)" ;
+        try {
+            PreparedStatement preparedstatement = connection.prepareStatement(SQL);
+            preparedstatement.setInt(1, 28);
+            preparedstatement.setString(2, "Juan");
+            preparedstatement.setString(3, "Quesada");
+            preparedstatement.setString(4, "Compras");
+            preparedstatement.executeUpdate();
         }catch (SQLException exception){
             System.out.print("ERROR Kata5 Ejemplo SQLite" + exception.getMessage());
         }
