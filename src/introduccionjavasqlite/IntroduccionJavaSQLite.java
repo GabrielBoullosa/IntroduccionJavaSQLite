@@ -31,7 +31,7 @@ public class IntroduccionJavaSQLite {
         }
         return connection;
     }
-
+    ///Con una Base de datos ya existe.
     private static void selectData_PEOPLE(Connection connection) {
         String SQL = "SELECT * FROM PEOPLE";
         try {
